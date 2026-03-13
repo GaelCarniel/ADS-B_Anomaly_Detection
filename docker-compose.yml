@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  notebook:
+    image: jupyter/scipy-notebook:latest
+    container_name: adsb_anomaly_detection
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/home/jovyan/work
+    working_dir: /home/jovyan/work
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - OPENSKY_CLIENT_ID=${OPENSKY_CLIENT_ID}
+      - OPENSKY_CLIENT_SECRET=${OPENSKY_CLIENT_SECRET}
+    command: >
+      bash -c "pip install -r requirements.txt --quiet && start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
